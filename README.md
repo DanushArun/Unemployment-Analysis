@@ -1,7 +1,72 @@
+![Unemployment Analysis workflow](docs/assets/project-overview.svg)
+
 # Unemployment Analysis
+
+**Inspect regional and period patterns without inventing causal claims.**
 
 An exploratory notebook comparing unemployment patterns across Indian regions and dates.
 It visualizes two supplied datasets; it does not train a forecasting model.
+
+
+![Python](https://img.shields.io/badge/Python-181f28)
+![Jupyter](https://img.shields.io/badge/Jupyter-181f28)
+![Pandas and plotting](https://img.shields.io/badge/Pandas%20and%20plotting-181f28)
+
+[Architecture](docs/ARCHITECTURE.md) · [Evaluation guide](docs/EVALUATION.md)
+
+**Contents:** [The challenge](#the-challenge) · [Walkthrough](#walk-through-the-project) ·
+[Implementation](#implementation-state) · [Design choices](#engineering-choices) ·
+[Next evidence](#next-evidence-to-collect)
+
+---
+
+## The challenge
+
+Two historical unemployment datasets provide an approachable way to inspect the relationship
+between inputs and Descriptive comparisons. This repository keeps that work in a notebook so
+preparation, computation and saved outputs can be read together. Its value is an inspectable
+experiment, not a deployed prediction service.
+
+![Saved notebook diagnostic](docs/assets/saved-notebook-output.png)
+
+*Historical output embedded in [Task_2.ipynb](Task_2.ipynb), cell 20. Extracted unchanged from the
+notebook; not a fresh experiment result.*
+
+## System at a glance
+
+```mermaid
+flowchart LR
+    N0["CSV data"]
+    N1["cleaning"]
+    N2["regional/time plots"]
+    N3["interpretation"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+```
+
+## Walk through the project
+
+### 1. Supply the input data
+
+The required CSV files are not tracked. Obtain an authorized copy with the expected schema and
+replace the author-specific absolute paths before execution.
+
+### 2. Inspect the preparation
+
+Column names are normalized before analysis. Review the transformations and exclusions before
+rerunning; an output cannot be understood separately from its input preparation.
+
+### 3. Run the experiment
+
+The implemented method is Pandas and plotting. Invalid date strings are coerced to missing values.
+Execute in a fresh kernel to reveal ordering and dependency problems.
+
+### 4. Read the diagnostics
+
+Saved cleaned shapes show 740 and 267 rows. Period comparisons around March 2020 are descriptive,
+not a causal model or current economic forecast. Dropna changes the analyzed sample and needs
+inspection.
 
 ## What is in the repository
 
@@ -42,3 +107,32 @@ The analysis was not rerun because its input files are absent.
 Regional averages and period comparisons describe the supplied samples. They do not establish
 that a particular event caused unemployment changes, and they are not current economic data.
 There is no automated test suite, deployment service or trained prediction artifact here.
+
+## Engineering choices
+
+**Inputs are explicit.** region, date, unemployment-rate fields, labor-force fields where supplied.
+
+**Method is inspectable.** Pandas and plotting is the implemented method; no broader modeling
+capability is inferred.
+
+**Historical evidence is labeled.** Saved cleaned shapes show 740 and 267 rows. Period comparisons
+around March 2020 are descriptive, not a causal model or current economic forecast.
+
+## Implementation state
+
+| State | Current evidence |
+| --- | --- |
+| Present | Notebook source and historical saved outputs |
+| Required externally | Authorized CSV input and compatible Python packages |
+| Not rerun | Data-dependent execution in this documentation pass |
+| Not supplied | Deployment service, model registry or automated behavior suite |
+
+The [architecture guide](docs/ARCHITECTURE.md) maps these statements to source entry points.
+The [evaluation guide](docs/EVALUATION.md) separates inspection, executable checks and
+domain validation, with the next evidence needed for each project.
+
+## Next evidence to collect
+
+- Supply data provenance and a reproducible local path.
+- Record a fresh-kernel run with package versions.
+- Evaluate stability across independent samples before widening any performance claim.
